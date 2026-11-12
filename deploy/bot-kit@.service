@@ -1,0 +1,20 @@
+# systemd template: one unit per process. Enable with e.g.
+#   systemctl enable --now bot-kit@notifier bot-kit@projection
+# Each worker restarts on failure and stops cleanly on SIGTERM. Paths are examples.
+[Unit]
+Description=bot-kit worker %i
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=botuser
+WorkingDirectory=/opt/bot-kit
+EnvironmentFile=/opt/bot-kit/.env
+ExecStart=/opt/bot-kit/.venv/bin/python -m examples.shop_requests.workers %i --db /opt/bot-kit/data/bot.sqlite3
+Restart=always
+RestartSec=5
+NoNewPrivileges=true
+ProtectSystem=full
+
+[Install]
+WantedBy=multi-user.target
