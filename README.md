@@ -8,6 +8,14 @@ Pure Python standard library, SQLite as the single source of truth, 35 offline t
 > third-party client code, names, data or credentials. The ideas are standard
 > reliability patterns (idempotency keys, transactional outbox, fail-closed parsing).
 
+## See it run
+
+`python -m examples.shop_requests.demo` runs the whole system with fake I/O:
+a confirmed request, a double YES that does nothing, a vague status message the parser
+refuses, a replayed message that is ignored, and a read-only export for the business owner.
+
+![Demo output](docs/demo.svg)
+
 ## Why it exists
 
 Chat bots that talk to the outside world fail in boring, expensive ways:
